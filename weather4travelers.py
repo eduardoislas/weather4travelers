@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import creds
 from datetime import datetime
 
 # Get tickets from CSV
@@ -42,8 +43,8 @@ def get_report(result):
 # Execute program
 result = []
 for i in data.index[:10]:
-    url_origin = f'https://api.openweathermap.org/data/2.5/weather?lat={data["origin_latitude"][i]}&lon={data["origin_longitude"][i]}&units=metric&appid=39269b1a039f1f445ddf146c7ad4aa75'
-    url_destination = f'https://api.openweathermap.org/data/2.5/weather?lat={data["destination_latitude"][i]}&lon={data["destination_longitude"][i]}&units=metric&appid=39269b1a039f1f445ddf146c7ad4aa75'
+    url_origin = f'https://api.openweathermap.org/data/2.5/weather?lat={data["origin_latitude"][i]}&lon={data["origin_longitude"][i]}&units=metric&appid={creds.API_KEY}'
+    url_destination = f'https://api.openweathermap.org/data/2.5/weather?lat={data["destination_latitude"][i]}&lon={data["destination_longitude"][i]}&units=metric&appid={creds.API_KEY}'
     weather_origin = get_weather(url_origin)
     weather_destination = get_weather(url_destination)
     if weather_origin != None and weather_destination != None:
