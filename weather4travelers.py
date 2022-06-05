@@ -1,3 +1,7 @@
+"""
+@author: Eduardo Islas
+"""
+
 import requests
 import pandas as pd
 import creds
@@ -42,13 +46,13 @@ def get_report(result):
 
 # Execute program
 result = []
-for i in data.index[:10]:
-    url_origin = f'https://api.openweathermap.org/data/2.5/weather?lat={data["origin_latitude"][i]}&lon={data["origin_longitude"][i]}&units=metric&appid={creds.API_KEY}'
-    url_destination = f'https://api.openweathermap.org/data/2.5/weather?lat={data["destination_latitude"][i]}&lon={data["destination_longitude"][i]}&units=metric&appid={creds.API_KEY}'
-    weather_origin = get_weather(url_origin)
-    weather_destination = get_weather(url_destination)
-    if weather_origin != None and weather_destination != None:
-        result.append({'weather_origin': weather_origin["main"]["temp"],'weather_destination': weather_destination["main"]["temp"]})
+for i in data.index:
+        url_origin = f'https://api.openweathermap.org/data/2.5/weather?lat={data["origin_latitude"][i]}&lon={data["origin_longitude"][i]}&units=metric&appid={creds.API_KEY}'
+        url_destination = f'https://api.openweathermap.org/data/2.5/weather?lat={data["destination_latitude"][i]}&lon={data["destination_longitude"][i]}&units=metric&appid={creds.API_KEY}'
+        weather_origin = get_weather(url_origin)
+        weather_destination = get_weather(url_destination)
+        if weather_origin != None and weather_destination != None:
+            result.append({'weather_origin': weather_origin["main"]["temp"],'weather_destination': weather_destination["main"]["temp"]})
 
 if len(result) > 0:
     output = get_report(pd.DataFrame(result))
@@ -57,4 +61,3 @@ if len(result) > 0:
     print("Report created")
 else:
     print("Runtime error, report can not be created")
-
